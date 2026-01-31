@@ -1,43 +1,41 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 
-# Set project name and version
-project(QtQuickApp VERSION 1.0.0 LANGUAGES CXX)
+project(test VERSION 0.1 LANGUAGES CXX)
 
-# Find Qt6 packages
-find_package(Qt6 REQUIRED COMPONENTS Core Quick QuickControls2)
-
-# Set C++ standard
-set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Add executable
-add_executable(${PROJECT_NAME}
+find_package(Qt6 REQUIRED COMPONENTS Quick)
+
+qt_standard_project_setup(REQUIRES 6.8)
+
+qt_add_executable(apptest
     main.cpp
-    main.qrc
-    main.qml
 )
 
-# Set target properties
-target_link_libraries(${PROJECT_NAME}
-    PRIVATE
-        Qt6::Core
-        Qt6::Quick
-        Qt6::QuickControls2
+qt_add_qml_module(apptest
+    URI test
+    QML_FILES
+        Main.qml
 )
 
-# Set QML import path
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    QT_QML_IMPORT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/qml"
+# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
+# If you are developing for iOS or macOS you should consider setting an
+# explicit, fixed bundle identifier manually though.
+set_target_properties(apptest PROPERTIES
+#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.apptest
+    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    MACOSX_BUNDLE TRUE
+    WIN32_EXECUTABLE TRUE
 )
 
-# Install rules
-install(TARGETS ${PROJECT_NAME}
+target_link_libraries(apptest
+    PRIVATE Qt6::Quick
+)
+
+include(GNUInstallDirs)
+install(TARGETS apptest
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
-
-# Enable automatic moc and rcc
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
