@@ -6,11 +6,21 @@
 
 #include "autogen/environment.h"
 
+
+
 int main(int argc, char *argv[])
 {
+    bool ROSEnabled = false;
+    #ifndef QTBUILDONLY
+          rclcpp::init(argc, argv);
+  std::shared_ptr<TidalwaveROS> ROSobject = std::make_shared<TidalwaveROS>();
+std::jthread ros_thread([ROSobject]() {
+    rclcpp::spin(ROSobject); 
+    ROSEnabled = true;
+});
+    #endif
     set_qt_environment();
     QApplication app(argc, argv);
-
     QQmlApplicationEngine engine;
     const QUrl url(mainQmlFile);
     QObject::connect(
