@@ -1,5 +1,6 @@
 option(QTBuild "Set ON to develop QTBuild" ON)
 
+############################################
 if(QTBuild AND NOT APPLE)
 
 cmake_minimum_required(VERSION 3.21.1)
@@ -56,6 +57,7 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+############################################
 elseif(NOT QTBuild AND NOT APPLE)
 cmake_minimum_required(VERSION 3.8)
 project(Tidalwave_InterfaceApp)
@@ -77,6 +79,7 @@ install(TARGETS tidalwave_ros2_only DESTINATION lib/tidalwave_ros2_only)
 OPTION(ROS2ONLY "only run the ros2 parts" ON)
 add_compile_definitions(ROS2ONLY)
 ament_package()
+############################################
 elseif(QTBuild)
     cmake_minimum_required(VERSION 3.21.1)
 
