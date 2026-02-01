@@ -3,7 +3,7 @@
 
 add_subdirectory(Tidalwave_Interface)
 add_subdirectory(Tidalwave_InterfaceContent)
-add_subdirectory(App)
+add_subdirectory(Backend)
 add_subdirectory(Dependencies)
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
