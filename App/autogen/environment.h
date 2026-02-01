@@ -8,10 +8,10 @@
 #include <QGuiApplication>
 #include "qqmlextensionplugin.h"
 
-Q_IMPORT_QML_PLUGIN(Tidalwave_FrontendPlugin)
-Q_IMPORT_QML_PLUGIN(Tidalwave_FrontendContentPlugin)
+Q_IMPORT_QML_PLUGIN(Tidalwave_InterfacePlugin)
+Q_IMPORT_QML_PLUGIN(Tidalwave_InterfaceContentPlugin)
 
-const char mainQmlFile[] = "qrc:/qt/qml/Tidalwave_FrontendContent/App.qml";
+const char mainQmlFile[] = "qrc:/qt/qml/Tidalwave_InterfaceContent/App.qml";
 
 #ifdef BUILD_QDS_COMPONENTS
 
