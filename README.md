@@ -4,10 +4,10 @@
 ## Build Enviornment
 Bash Scripts are copy and paste friendly.
 
-If on Macbook
-	If on ros2 enviornment
-		Starting in main folder
-		```bash
+If on Macbook \
+&ensp;	If on ros2 enviornment \
+&ensp;&ensp;		Starting in main folder \
+&ensp;&ensp;&ensp;		```bash
 		cd Backend
 		cd custom_interfaces
 		colcon build &
@@ -16,13 +16,13 @@ If on Macbook
 		colcon build --cmake-args -DQTBuild=OFF & 
 		cd build
 		./tidalwave_ros2_only
-		```
-	else 
-		```bash
-		mkdir build
-		cd build
-		cmake ..
-		./Tidalwave_InterfaceApp
-else
-	NOT DEVELOPED.
+		``` \
+&ensp;&ensp; else \
+&ensp;&ensp;&ensp;	```bash \
+&ensp;&ensp;&ensp;		mkdir build \
+&ensp;&ensp;&ensp;		cd build \
+&ensp;&ensp;&ensp;		cmake .. \
+&ensp;&ensp;&ensp;		./Tidalwave_InterfaceApp \
+else \
+&ensp;	NOT DEVELOPED.
 		
