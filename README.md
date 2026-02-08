@@ -2,7 +2,7 @@
  GUI for robot control and monitoring
 
 ## Build Enviornment
-Bash Scripts are copy and paste friendly.
+Bash Lines are copy and paste friendly.
 
 If on Macbook \
 &ensp;	If on ros2 enviornment \
@@ -23,6 +23,7 @@ If on Macbook \
 &ensp;&ensp;&ensp;		cd build \
 &ensp;&ensp;&ensp;		cmake .. \
 &ensp;&ensp;&ensp;		./Tidalwave_InterfaceApp \
+&ensp;&ensp; end-if \
 else \
 &ensp;	NOT DEVELOPED.
-		
+&ensp;&ensp; end-if \

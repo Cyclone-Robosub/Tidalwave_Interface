@@ -1,8 +1,16 @@
 option(QTBuild "Set ON to develop QTBuild" ON)
 
-############################################
-if(QTBuild AND NOT APPLE)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+option(ROS2 "Set ON to develop ROS" ON)
+if(APPLE)
+    option(ROS2 "Set to off" OFF)
+endif()
 
+############################################
+if(QTBuild AND ROS2)
+message("Normal build")
 cmake_minimum_required(VERSION 3.21.1)
 
 option(LINK_INSIGHT "Link Qt Insight Tracker library" ON)
@@ -60,31 +68,33 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
 
 ############################################
 
-elseif(NOT QTBuild AND NOT APPLE)
+elseif(NOT QTBuild AND ROS2)
+message("Only ros2 build")
 cmake_minimum_required(VERSION 3.8)
 project(Tidalwave_InterfaceApp)
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(custom_interfaces REQUIRED)
+find_package(ament_cmake_gtest REQUIRED)
 find_package(std_srvs REQUIRED)
-add_executable(tidalwave_ros2_only Backend/ros2.cpp)
- ament_target_dependencies(tidalwave_ros2_only
-        rclcpp 
-        custom_interfaces 
-        std_srvs
-    )
-install(TARGETS tidalwave_ros2_only DESTINATION lib/tidalwave_ros2_only)
+
 OPTION(ROS2ONLY "only run the ros2 parts" ON)
 add_compile_definitions(ROS2ONLY)
+ament_add_gtest( ROS2_ONLY_test_exec
+    Backend/test/ROS2_ONLY/test_main.cpp
+    Backend/ros2.cpp
+)
+    if(TARGET ROS2_ONLY_test_exec)
+        ament_target_dependencies(ROS2_ONLY_test_exec rclcpp  custom_interfaces 
+        std_srvs)
+    endif()
 ament_package()
 
 ############################################
 
 elseif(QTBuild) # ONLY QT BUILD
+message("Only QT build")
     cmake_minimum_required(VERSION 3.21.1)
     OPTION(QTBUILDONLY "only run the QT code" ON)
     add_compile_definitions(QTBUILDONLY)
@@ -130,4 +140,24 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+# -------------------------
+# GoogleTest
+# -------------------------
+include(FetchContent)
+FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG v1.14.0
+)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+
+file(GLOB TEST_SOURCES CONFIGURE_DEPENDS test/*.cpp) # ensures all the files in test are included
+add_executable(MyTests ${TEST_SOURCES})
+
+target_link_libraries(MyTests PRIVATE gtest_main)
+
+include(GoogleTest)
+gtest_discover_tests(MyTests)
 endif()
