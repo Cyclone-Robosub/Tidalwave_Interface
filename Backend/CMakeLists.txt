@@ -10,7 +10,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
     Qt${QT_VERSION_MAJOR}::Quick
     Qt${QT_VERSION_MAJOR}::Qml)
 
-
+if(ROS2ONLY)
 # -------------------------
 # GoogleTest
 # -------------------------
@@ -31,3 +31,4 @@ target_link_libraries(MyTests PRIVATE gtest_main)
 
 include(GoogleTest)
 gtest_discover_tests(MyTests)
+endif()
