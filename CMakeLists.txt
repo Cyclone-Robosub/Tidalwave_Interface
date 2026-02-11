@@ -21,6 +21,7 @@ project(Tidalwave_InterfaceApp LANGUAGES CXX)
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(custom_interfaces REQUIRED)
+find_package(ament_cmake_gtest REQUIRED)
 find_package(std_srvs REQUIRED)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -65,6 +66,19 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+# -------------------------
+# GoogleTest
+# -------------------------
+ament_add_gtest( testExec
+    Backend/test/ROS2_ONLY/test_main.cpp
+    Backend/test/QT_ONLY/test_main.cpp
+    Backend/ros2.cpp
+)
+    if(TARGET testExec)
+        ament_target_dependencies(testExec rclcpp  custom_interfaces 
+        std_srvs)
+    endif()
+ament_package()
 
 ############################################
 
@@ -81,6 +95,9 @@ find_package(std_srvs REQUIRED)
 
 OPTION(ROS2ONLY "only run the ros2 parts" ON)
 add_compile_definitions(ROS2ONLY)
+# -------------------------
+# GoogleTest
+# -------------------------
 ament_add_gtest( ROS2_ONLY_test_exec
     Backend/test/ROS2_ONLY/test_main.cpp
     Backend/ros2.cpp
