@@ -16,6 +16,7 @@ int main(int argc, char *argv[]) {
     ROSEnabled = true;
   });
 #endif
+#ifdef QTEnabled
   set_qt_environment();
   QApplication app(argc, argv);
   QQmlApplicationEngine engine;
@@ -36,4 +37,5 @@ int main(int argc, char *argv[]) {
     return -1;
 
   return app.exec();
+  #endif
 }

@@ -66,6 +66,7 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+add_compile_definitions(QTEnabled)
 # -------------------------
 # GoogleTest
 # -------------------------
@@ -157,6 +158,7 @@ install(TARGETS ${CMAKE_PROJECT_NAME}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+add_compile_definitions(QTEnabled)
 # -------------------------
 # GoogleTest
 # -------------------------
