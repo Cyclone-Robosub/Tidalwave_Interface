@@ -102,6 +102,7 @@ add_compile_definitions(ROS2ONLY)
 ament_add_gtest( ROS2_ONLY_test_exec
     Backend/test/ROS2_ONLY/test_main.cpp
     Backend/ros2.cpp
+    Backend/StateSaver/StateSaver.cpp
 )
     if(TARGET ROS2_ONLY_test_exec)
         ament_target_dependencies(ROS2_ONLY_test_exec rclcpp  custom_interfaces 
