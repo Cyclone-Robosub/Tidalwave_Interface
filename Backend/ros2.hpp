@@ -2,6 +2,8 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/bool.hpp"
 #include "std_msgs/msg/string.hpp"
+#include "custom_interfaces/msg/imu.hpp"
+
 #include <atomic>
 #include <memory>
 using namespace std::chrono_literals;
@@ -23,4 +25,6 @@ private:
   // rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
   rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr Current_Control_sub;
   rclcpp::SubscriptionOptions RobotOptions = rclcpp::SubscriptionOptions();
+
+  rclcpp::Subscription<custom_interfaces::msg::Imu>::SharedPtr imu_sub;
 };
